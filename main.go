@@ -1,12 +1,18 @@
 package main
 
-import "fmt"
+import (
+	//"fmt"
+	"math/rand"
+	"time"
+)
+
+func init() {
+	rand.Seed(time.Now().UTC().UnixNano())
+}
 
 func main() {
 	et := NewTable()
-	err := et.MoveLeft()
-	if err != nil {
-		fmt.Println("error:", err)
-	}
+	et.Print()
+	et.Shuffle(1000)
 	et.Print()
 }

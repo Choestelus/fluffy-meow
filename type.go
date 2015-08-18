@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"math/rand"
 )
 
 // EightTable stores numbers in 8-puzzle
@@ -73,6 +74,45 @@ func (et EightTable) Movables() Moves {
 		moves.Down = true
 	}
 	return moves
+}
+func (et *EightTable) Shuffle(n int) {
+	var successCount int
+	for i := 0; successCount < n; i++ {
+		r := rand.Intn(4)
+		if r == MOVE_UP {
+			err := et.MoveUp()
+			if err != nil {
+			} else {
+				successCount++
+				fmt.Printf("Moved up [%v]\n", successCount)
+			}
+		}
+		if r == MOVE_DOWN {
+			err := et.MoveDown()
+			if err != nil {
+			} else {
+				successCount++
+				fmt.Printf("Moved down [%v]\n", successCount)
+			}
+		}
+		if r == MOVE_LEFT {
+			err := et.MoveLeft()
+			if err != nil {
+			} else {
+				successCount++
+				fmt.Printf("Moved left [%v]\n", successCount)
+			}
+		}
+		if r == MOVE_RIGHT {
+			err := et.MoveRight()
+			if err != nil {
+			} else {
+				successCount++
+				fmt.Printf("Moved right [%v]\n", successCount)
+			}
+		}
+
+	}
 }
 
 func (et *EightTable) MoveLeft() error {
