@@ -8,6 +8,5 @@ func main() {
 	if err != nil {
 		fmt.Println("error:", err)
 	}
-	fmt.Println(et)
-	fmt.Println("blank Position = ", et.FindBlank())
+	et.Print()
 }

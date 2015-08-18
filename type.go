@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 )
 
 // EightTable stores numbers in 8-puzzle
@@ -12,6 +13,12 @@ type Position struct {
 	Row    int
 	Column int
 }
+type Moves struct {
+	Up    bool
+	Down  bool
+	Left  bool
+	Right bool
+}
 
 const (
 	TABLE_SIZE = 3
@@ -20,9 +27,6 @@ const (
 	MOVE_LEFT  = 2
 	MOVE_RIGHT = 3
 )
-
-type Movables interface {
-}
 
 // NewTable initialize puzzle table
 func NewTable() EightTable {
@@ -35,7 +39,13 @@ func NewTable() EightTable {
 	return et
 }
 
-func (et *EightTable) FindBlank() Position {
+func (et EightTable) Print() {
+	for _, e := range et.table {
+		fmt.Println("-->", e)
+	}
+}
+
+func (et EightTable) FindBlank() Position {
 	var pos Position
 	for i := range et.table {
 		for j := range et.table[i] {
@@ -46,6 +56,25 @@ func (et *EightTable) FindBlank() Position {
 	}
 	return pos
 }
+
+func (et EightTable) Movables() Moves {
+	pos := et.FindBlank()
+	var moves Moves
+	if pos.Column > 0 {
+		moves.Left = true
+	}
+	if pos.Column < TABLE_SIZE-1 {
+		moves.Right = true
+	}
+	if pos.Row > 0 {
+		moves.Up = true
+	}
+	if pos.Row < TABLE_SIZE-1 {
+		moves.Down = true
+	}
+	return moves
+}
+
 func (et *EightTable) MoveLeft() error {
 	bpos := et.FindBlank()
 	if bpos.Column > 0 {
