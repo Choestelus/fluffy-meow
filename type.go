@@ -84,7 +84,6 @@ func (et *EightTable) Shuffle(n int) {
 			if err != nil {
 			} else {
 				successCount++
-				fmt.Printf("Moved up [%v]\n", successCount)
 			}
 		}
 		if r == MOVE_DOWN {
@@ -92,7 +91,6 @@ func (et *EightTable) Shuffle(n int) {
 			if err != nil {
 			} else {
 				successCount++
-				fmt.Printf("Moved down [%v]\n", successCount)
 			}
 		}
 		if r == MOVE_LEFT {
@@ -100,7 +98,6 @@ func (et *EightTable) Shuffle(n int) {
 			if err != nil {
 			} else {
 				successCount++
-				fmt.Printf("Moved left [%v]\n", successCount)
 			}
 		}
 		if r == MOVE_RIGHT {
@@ -108,7 +105,6 @@ func (et *EightTable) Shuffle(n int) {
 			if err != nil {
 			} else {
 				successCount++
-				fmt.Printf("Moved right [%v]\n", successCount)
 			}
 		}
 
