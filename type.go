@@ -4,6 +4,20 @@ package main
 type EightTable struct {
 	table [3][3]int
 }
+type Position struct {
+	Row    int
+	Column int
+}
+
+const (
+	MOVE_UP    = 0
+	MOVE_DOWN  = 1
+	MOVE_LEFT  = 2
+	MOVE_RIGHT = 3
+)
+
+type Movables interface {
+}
 
 // NewTable initialize puzzle table
 func NewTable() EightTable {
@@ -14,4 +28,26 @@ func NewTable() EightTable {
 		}
 	}
 	return et
+}
+
+func (et *EightTable) FindBlank() Position {
+	var pos Position
+	for i := range et.table {
+		for j := range et.table[i] {
+			if et.table[i][j] == 0 {
+				pos = Position{i, j}
+			}
+		}
+	}
+	return pos
+}
+func (et *EightTable) MoveLeft() {
+}
+func (et *EightTable) MoveRight() {
+}
+func (et *EightTable) MoveUp() {
+}
+func (et *EightTable) MoveDown() {
+}
+func (et *EightTable) Movables() {
 }
