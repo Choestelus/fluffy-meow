@@ -34,7 +34,10 @@ func NewTable() EightTable {
 	var et EightTable
 	for i, e := range et.table {
 		for ii := range e {
-			et.table[i][ii] = 3*i + ii
+			et.table[i][ii] = 3*i + ii + 1
+			if 3*i+ii+1 == 9 {
+				et.table[i][ii] = 0
+			}
 		}
 	}
 	return et
