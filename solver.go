@@ -1,6 +1,6 @@
 package main
 
-func BFSSolve(solutionTable EightTable, puzzleTable EightTable, moves []Moves) []Moves {
+func ParallelSolve(solutionTable EightTable, puzzleTable EightTable, moves []Moves) []Moves {
 	if solutionTable == puzzleTable {
 		return moves
 	}
@@ -13,7 +13,7 @@ func BFSSolve(solutionTable EightTable, puzzleTable EightTable, moves []Moves) [
 			panic(err)
 		}
 		moves = append(moves, Moves{Down: true})
-		BFSSolve(solutionTable, puzzleTable, moves)
+		ParallelSolve(solutionTable, puzzleTable, moves)
 	}
 	if m.Up {
 		err := puzzleTable.MoveUp()
@@ -21,7 +21,7 @@ func BFSSolve(solutionTable EightTable, puzzleTable EightTable, moves []Moves) [
 			panic(err)
 		}
 		moves = append(moves, Moves{Up: true})
-		BFSSolve(solutionTable, puzzleTable, moves)
+		ParallelSolve(solutionTable, puzzleTable, moves)
 	}
 	if m.Left {
 		err := puzzleTable.MoveLeft()
@@ -29,7 +29,7 @@ func BFSSolve(solutionTable EightTable, puzzleTable EightTable, moves []Moves) [
 			panic(err)
 		}
 		moves = append(moves, Moves{Left: true})
-		BFSSolve(solutionTable, puzzleTable, moves)
+		ParallelSolve(solutionTable, puzzleTable, moves)
 	}
 	if m.Right {
 		err := puzzleTable.MoveRight()
@@ -37,6 +37,6 @@ func BFSSolve(solutionTable EightTable, puzzleTable EightTable, moves []Moves) [
 			panic(err)
 		}
 		moves = append(moves, Moves{Right: true})
-		BFSSolve(solutionTable, puzzleTable, moves)
+		ParallelSolve(solutionTable, puzzleTable, moves)
 	}
 }
