@@ -1,7 +1,7 @@
 package main
 
 func ParallelSolve(solutionTable EightTable, puzzleTable EightTable, moves []Moves) []Moves {
-	if solutionTable == puzzleTable {
+	if solutionTable.Table == puzzleTable.Table {
 		return moves
 	}
 
@@ -39,4 +39,5 @@ func ParallelSolve(solutionTable EightTable, puzzleTable EightTable, moves []Mov
 		moves = append(moves, Moves{Right: true})
 		ParallelSolve(solutionTable, puzzleTable, moves)
 	}
+	return nil
 }

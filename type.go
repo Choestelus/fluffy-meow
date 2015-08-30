@@ -4,11 +4,13 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
+	"strconv"
 )
 
 // EightTable stores numbers in 8-puzzle
 type EightTable struct {
-	table [3][3]int
+	Table       [3][3]int
+	MoveHistory []Moves
 }
 type Position struct {
 	Row    int
@@ -32,11 +34,11 @@ const (
 // NewTable initialize puzzle table
 func NewTable() EightTable {
 	var et EightTable
-	for i, e := range et.table {
+	for i, e := range et.Table {
 		for ii := range e {
-			et.table[i][ii] = 3*i + ii + 1
+			et.Table[i][ii] = 3*i + ii + 1
 			if 3*i+ii+1 == 9 {
-				et.table[i][ii] = 0
+				et.Table[i][ii] = 0
 			}
 		}
 	}
@@ -44,16 +46,34 @@ func NewTable() EightTable {
 }
 
 func (et EightTable) Print() {
-	for _, e := range et.table {
+	for _, e := range et.Table {
 		fmt.Println("-->", e)
 	}
 }
 
+func (m Moves) Print() string {
+	str := ""
+	if m.Up {
+		str += "Up"
+	}
+	if m.Down {
+		str += "Down"
+	}
+
+	if m.Left {
+		str += "Left"
+	}
+	if m.Right {
+		str += "Right"
+	}
+	return "[" + str + "]"
+}
+
 func (et EightTable) FindBlank() Position {
 	var pos Position
-	for i := range et.table {
-		for j := range et.table[i] {
-			if et.table[i][j] == 0 {
+	for i := range et.Table {
+		for j := range et.Table[i] {
+			if et.Table[i][j] == 0 {
 				pos = Position{i, j}
 			}
 		}
@@ -113,40 +133,49 @@ func (et *EightTable) Shuffle(n int) {
 
 	}
 }
+func (et EightTable) Self() EightTable {
+	return et
+}
 
 func (et *EightTable) MoveLeft() error {
 	bpos := et.FindBlank()
 	if bpos.Column > 0 {
-		et.table[bpos.Row][bpos.Column], et.table[bpos.Row][bpos.Column-1] = et.table[bpos.Row][bpos.Column-1], et.table[bpos.Row][bpos.Column]
+		et.Table[bpos.Row][bpos.Column], et.Table[bpos.Row][bpos.Column-1] = et.Table[bpos.Row][bpos.Column-1], et.Table[bpos.Row][bpos.Column]
 	} else {
 		return errors.New("cannot move blank space to left")
 	}
+	et.MoveHistory = append(et.MoveHistory, Moves{Left: true})
 	return nil
 }
 func (et *EightTable) MoveRight() error {
 	bpos := et.FindBlank()
 	if bpos.Column < TABLE_SIZE-1 {
-		et.table[bpos.Row][bpos.Column], et.table[bpos.Row][bpos.Column+1] = et.table[bpos.Row][bpos.Column+1], et.table[bpos.Row][bpos.Column]
+		et.Table[bpos.Row][bpos.Column], et.Table[bpos.Row][bpos.Column+1] = et.Table[bpos.Row][bpos.Column+1], et.Table[bpos.Row][bpos.Column]
 	} else {
 		return errors.New("cannot move blank space to right")
 	}
+	et.MoveHistory = append(et.MoveHistory, Moves{Right: true})
 	return nil
 }
+
 func (et *EightTable) MoveUp() error {
 	bpos := et.FindBlank()
 	if bpos.Row > 0 {
-		et.table[bpos.Row][bpos.Column], et.table[bpos.Row-1][bpos.Column] = et.table[bpos.Row-1][bpos.Column], et.table[bpos.Row][bpos.Column]
+		et.Table[bpos.Row][bpos.Column], et.Table[bpos.Row-1][bpos.Column] = et.Table[bpos.Row-1][bpos.Column], et.Table[bpos.Row][bpos.Column]
 	} else {
-		return errors.New("cannot move blank space to up")
+		return errors.New("cannot move blank space to up" + strconv.Itoa(bpos.Row))
 	}
+	et.MoveHistory = append(et.MoveHistory, Moves{Up: true})
 	return nil
 }
+
 func (et *EightTable) MoveDown() error {
 	bpos := et.FindBlank()
 	if bpos.Row < TABLE_SIZE-1 {
-		et.table[bpos.Row][bpos.Column], et.table[bpos.Row+1][bpos.Column] = et.table[bpos.Row+1][bpos.Column], et.table[bpos.Row][bpos.Column]
+		et.Table[bpos.Row][bpos.Column], et.Table[bpos.Row+1][bpos.Column] = et.Table[bpos.Row+1][bpos.Column], et.Table[bpos.Row][bpos.Column]
 	} else {
 		return errors.New("cannot move blank space to up")
 	}
+	et.MoveHistory = append(et.MoveHistory, Moves{Down: true})
 	return nil
 }
