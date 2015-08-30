@@ -1,7 +1,10 @@
 package main
 
+import "log"
+
 func BFS(puzzleTable EightTable, matchTable EightTable) []Moves {
 	queue := make([]EightTable, 0)
+	puzzleTable.MoveHistory = nil
 	queue = append(queue, puzzleTable)
 	var movePath []Moves
 	for len(queue) != 0 {
@@ -17,10 +20,10 @@ func BFS(puzzleTable EightTable, matchTable EightTable) []Moves {
 		}
 
 		moves := u.Movables()
-		// log.Println("moveables:", "up", moves.Up, "down", moves.Down, "left", moves.Left, "right", moves.Right)
+		log.Println("moveables:", "up", moves.Up, "down", moves.Down, "left", moves.Left, "right", moves.Right)
 		if moves.Down {
-			// u.Print()
-			// log.Println("enqueueing down")
+			u.Print()
+			log.Println("enqueueing down")
 			n := u.Self()
 			err := n.MoveDown()
 			if err != nil {
@@ -29,8 +32,8 @@ func BFS(puzzleTable EightTable, matchTable EightTable) []Moves {
 			queue = append(queue, n)
 		}
 		if moves.Left {
-			// u.Print()
-			// log.Println("enqueueing left")
+			u.Print()
+			log.Println("enqueueing left")
 			n := u.Self()
 			err := n.MoveLeft()
 			if err != nil {
@@ -39,8 +42,8 @@ func BFS(puzzleTable EightTable, matchTable EightTable) []Moves {
 			queue = append(queue, n)
 		}
 		if moves.Right {
-			// u.Print()
-			// log.Println("enqueueing right")
+			u.Print()
+			log.Println("enqueueing right")
 			n := u.Self()
 			err := n.MoveRight()
 			if err != nil {
@@ -49,8 +52,8 @@ func BFS(puzzleTable EightTable, matchTable EightTable) []Moves {
 			queue = append(queue, n)
 		}
 		if moves.Up {
-			// u.Print()
-			// log.Println("enqueueing up")
+			u.Print()
+			log.Println("enqueueing up")
 			n := u.Self()
 			err := n.MoveUp()
 			if err != nil {
