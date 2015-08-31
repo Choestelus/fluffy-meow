@@ -23,16 +23,19 @@ func main() {
 		if err != nil {
 			log.Fatalln("try insert a number and try again")
 		}
-		et.Shuffle(count)
+		et = et.Shuffle(count)
 	} else {
-		et.Shuffle(10)
+		et = et.Shuffle(10)
 	}
 	et.Print()
-	solution := BFS(et, NewTable())
-	for i, e := range solution {
-		if i == 0 {
-			// continue
-		}
-		fmt.Println(i, "move: ", e.Print())
+	for _, e := range et.MoveHistory {
+		fmt.Println(e.Print())
 	}
+	// solution := BFS(et, NewTable())
+	// for i, e := range solution {
+	// 	if i == 0 {
+	// 		// continue
+	// 	}
+	// 	fmt.Println(i, "move: ", e.Print())
+	// }
 }

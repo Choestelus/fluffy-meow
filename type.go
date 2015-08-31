@@ -1,10 +1,8 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"math/rand"
-	"strconv"
 )
 
 // EightTable stores numbers in 8-puzzle
@@ -98,88 +96,112 @@ func (et EightTable) Movables() Moves {
 	}
 	return moves
 }
-func (et *EightTable) Shuffle(n int) {
+func (et EightTable) Shuffle(n int) (newEt EightTable) {
 	var successCount int
 	for i := 0; successCount < n; i++ {
 		r := rand.Intn(4)
-		if r == MOVE_UP {
-			err := et.MoveUp()
-			if err != nil {
-			} else {
-				successCount++
-				fmt.Println("moved up")
-			}
+		canMove := et.Movables()
+		if r == MOVE_UP && canMove.Up {
+			et = et.MoveUp()
+			successCount++
+			// et.Print()
 		}
-		if r == MOVE_DOWN {
-			err := et.MoveDown()
-			if err != nil {
-			} else {
-				successCount++
-				fmt.Println("moved down")
-			}
+		if r == MOVE_DOWN && canMove.Down {
+			et = et.MoveDown()
+			successCount++
+			// et.Print()
 		}
-		if r == MOVE_LEFT {
-			err := et.MoveLeft()
-			if err != nil {
-			} else {
-				successCount++
-				fmt.Println("moved left")
-			}
+		if r == MOVE_LEFT && canMove.Left {
+			et = et.MoveLeft()
+			successCount++
+			// et.Print()
 		}
-		if r == MOVE_RIGHT {
-			err := et.MoveRight()
-			if err != nil {
-			} else {
-				successCount++
-				fmt.Println("moved right")
-			}
+		if r == MOVE_RIGHT && canMove.Right {
+			et = et.MoveRight()
+			successCount++
+			// et.Print()
 		}
 
 	}
+	newEt = et
+	return
 }
 func (et EightTable) Self() EightTable {
 	return et
 }
+func (eet EightTable) MoveLeft() (et EightTable) {
+	for i := 0; i < TABLE_SIZE; i++ {
+		for j := 0; j < TABLE_SIZE; j++ {
+			et.Table[i][j] = eet.Table[i][j]
+		}
+	}
 
-func (et *EightTable) MoveLeft() error {
+	for _, e := range eet.MoveHistory {
+		et.MoveHistory = append(et.MoveHistory, e)
+	}
 	bpos := et.FindBlank()
 	if bpos.Column > 0 {
 		et.Table[bpos.Row][bpos.Column], et.Table[bpos.Row][bpos.Column-1] = et.Table[bpos.Row][bpos.Column-1], et.Table[bpos.Row][bpos.Column]
 	} else {
-		return errors.New("cannot move blank space to left")
+		panic("Error Moving Left")
 	}
 	et.MoveHistory = append(et.MoveHistory, Moves{Left: true})
-	return nil
+	return et
 }
-func (et *EightTable) MoveRight() error {
+
+func (eet EightTable) MoveRight() (et EightTable) {
+	for i := 0; i < TABLE_SIZE; i++ {
+		for j := 0; j < TABLE_SIZE; j++ {
+			et.Table[i][j] = eet.Table[i][j]
+		}
+	}
+	for _, e := range eet.MoveHistory {
+		et.MoveHistory = append(et.MoveHistory, e)
+	}
 	bpos := et.FindBlank()
 	if bpos.Column < TABLE_SIZE-1 {
 		et.Table[bpos.Row][bpos.Column], et.Table[bpos.Row][bpos.Column+1] = et.Table[bpos.Row][bpos.Column+1], et.Table[bpos.Row][bpos.Column]
 	} else {
-		return errors.New("cannot move blank space to right")
+		panic("Error Moving Right")
 	}
 	et.MoveHistory = append(et.MoveHistory, Moves{Right: true})
-	return nil
+	return et
 }
 
-func (et *EightTable) MoveUp() error {
+func (eet EightTable) MoveUp() (et EightTable) {
+	for i := 0; i < TABLE_SIZE; i++ {
+		for j := 0; j < TABLE_SIZE; j++ {
+			et.Table[i][j] = eet.Table[i][j]
+		}
+	}
+	for _, e := range eet.MoveHistory {
+		et.MoveHistory = append(et.MoveHistory, e)
+	}
 	bpos := et.FindBlank()
 	if bpos.Row > 0 {
 		et.Table[bpos.Row][bpos.Column], et.Table[bpos.Row-1][bpos.Column] = et.Table[bpos.Row-1][bpos.Column], et.Table[bpos.Row][bpos.Column]
 	} else {
-		return errors.New("cannot move blank space to up" + strconv.Itoa(bpos.Row))
+		panic("Error Moving Up")
 	}
 	et.MoveHistory = append(et.MoveHistory, Moves{Up: true})
-	return nil
+	return et
 }
 
-func (et *EightTable) MoveDown() error {
+func (eet EightTable) MoveDown() (et EightTable) {
+	for i := 0; i < TABLE_SIZE; i++ {
+		for j := 0; j < TABLE_SIZE; j++ {
+			et.Table[i][j] = eet.Table[i][j]
+		}
+	}
+	for _, e := range eet.MoveHistory {
+		et.MoveHistory = append(et.MoveHistory, e)
+	}
 	bpos := et.FindBlank()
 	if bpos.Row < TABLE_SIZE-1 {
 		et.Table[bpos.Row][bpos.Column], et.Table[bpos.Row+1][bpos.Column] = et.Table[bpos.Row+1][bpos.Column], et.Table[bpos.Row][bpos.Column]
 	} else {
-		return errors.New("cannot move blank space to up")
+		panic("error moving down")
 	}
 	et.MoveHistory = append(et.MoveHistory, Moves{Down: true})
-	return nil
+	return et
 }
