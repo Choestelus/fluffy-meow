@@ -37,6 +37,6 @@ func main() {
 		if i == 0 {
 			// continue
 		}
-		fmt.Println(i, "move: ", e.Print())
+		fmt.Println(i+1, "move: ", e.Print())
 	}
 }
