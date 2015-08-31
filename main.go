@@ -31,11 +31,12 @@ func main() {
 	for _, e := range et.MoveHistory {
 		fmt.Println(e.Print())
 	}
-	// solution := BFS(et, NewTable())
-	// for i, e := range solution {
-	// 	if i == 0 {
-	// 		// continue
-	// 	}
-	// 	fmt.Println(i, "move: ", e.Print())
-	// }
+	fmt.Println("--------------------------------------------------------------------------------")
+	solution := BFS(et, NewTable())
+	for i, e := range solution {
+		if i == 0 {
+			// continue
+		}
+		fmt.Println(i, "move: ", e.Print())
+	}
 }

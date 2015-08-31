@@ -104,22 +104,18 @@ func (et EightTable) Shuffle(n int) (newEt EightTable) {
 		if r == MOVE_UP && canMove.Up {
 			et = et.MoveUp()
 			successCount++
-			// et.Print()
 		}
 		if r == MOVE_DOWN && canMove.Down {
 			et = et.MoveDown()
 			successCount++
-			// et.Print()
 		}
 		if r == MOVE_LEFT && canMove.Left {
 			et = et.MoveLeft()
 			successCount++
-			// et.Print()
 		}
 		if r == MOVE_RIGHT && canMove.Right {
 			et = et.MoveRight()
 			successCount++
-			// et.Print()
 		}
 
 	}
@@ -145,6 +141,7 @@ func (eet EightTable) MoveLeft() (et EightTable) {
 	} else {
 		panic("Error Moving Left")
 	}
+	// fmt.Println("appending history")
 	et.MoveHistory = append(et.MoveHistory, Moves{Left: true})
 	return et
 }
@@ -164,6 +161,7 @@ func (eet EightTable) MoveRight() (et EightTable) {
 	} else {
 		panic("Error Moving Right")
 	}
+	// fmt.Println("appending history")
 	et.MoveHistory = append(et.MoveHistory, Moves{Right: true})
 	return et
 }
@@ -183,6 +181,7 @@ func (eet EightTable) MoveUp() (et EightTable) {
 	} else {
 		panic("Error Moving Up")
 	}
+	// fmt.Println("appending history")
 	et.MoveHistory = append(et.MoveHistory, Moves{Up: true})
 	return et
 }
@@ -202,6 +201,7 @@ func (eet EightTable) MoveDown() (et EightTable) {
 	} else {
 		panic("error moving down")
 	}
+	// fmt.Println("appending history")
 	et.MoveHistory = append(et.MoveHistory, Moves{Down: true})
 	return et
 }
