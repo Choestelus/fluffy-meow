@@ -10,10 +10,6 @@ func BFS(puzzleTable EightTable, matchTable EightTable) []Moves {
 		u := queue[0]
 		queue = queue[1:]
 
-		// for _, e := range u.MoveHistory {
-		// 	fmt.Println(len(u.MoveHistory), e.Print())
-		// }
-
 		if u.Table == matchTable.Table {
 			movePath = u.MoveHistory
 			break
