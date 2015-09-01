@@ -28,15 +28,35 @@ func main() {
 		et = et.Shuffle(10)
 	}
 	et.Print()
-	for _, e := range et.MoveHistory {
-		fmt.Println(e.Print())
-	}
+	// for _, e := range et.MoveHistory {
+	// 	fmt.Println(e.Print())
+	// }
 	fmt.Println("--------------------------------------------------------------------------------")
+	var displayTable EightTable
+	for i := 0; i < TABLE_SIZE; i++ {
+		for j := 0; j < TABLE_SIZE; j++ {
+			displayTable.Table[i][j] = et.Table[i][j]
+		}
+	}
 	solution := BFS(et, NewTable())
 	for i, e := range solution {
-		if i == 0 {
-			// continue
-		}
+		fmt.Println("--------------------------------------------------------------------------------")
 		fmt.Println(i+1, "move: ", e.Print())
+		if e.Down {
+			displayTable = displayTable.MoveDown()
+			displayTable.Print()
+		}
+		if e.Left {
+			displayTable = displayTable.MoveLeft()
+			displayTable.Print()
+		}
+		if e.Up {
+			displayTable = displayTable.MoveUp()
+			displayTable.Print()
+		}
+		if e.Right {
+			displayTable = displayTable.MoveRight()
+			displayTable.Print()
+		}
 	}
 }
